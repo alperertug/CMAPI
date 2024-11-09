@@ -1,4 +1,5 @@
 ﻿using CMA.Application.Abstractions;
+using CMA.Application.Repositories.RepoProduct;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMA.API.Controllers
@@ -7,18 +8,13 @@ namespace CMA.API.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly IProductService _productService;
+        private readonly IProductReadRepository _productReadRepository;
+        private readonly IProductWriteRepository _productWriteRepository;
 
-        public ProductsController(IProductService productService)
+        public ProductsController(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository)
         {
-            _productService = productService;
-        }
-
-        [HttpGet]
-        public IActionResult GetProducts()
-        {
-            var products = _productService.GetProducts();
-            return Ok(products);
+            _productReadRepository = productReadRepository;
+            _productWriteRepository = productWriteRepository;
         }
     }
 }
